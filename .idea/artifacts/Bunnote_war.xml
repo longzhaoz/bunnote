@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Bunnote:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="Bunnote.war">
+      <element id="artifact" artifact-name="Bunnote:war exploded" />
+    </root>
+  </artifact>
+</component>

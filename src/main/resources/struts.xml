@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!-- 所有匹配*.action的请求都由struts2处理 -->
+    <constant name="struts.action.extension" value="jsp" />
+    <!-- 是否启用开发模式 -->
+    <constant name="struts.devMode" value="true" />
+    <!-- struts配置文件改动后，是否重新加载 -->
+    <constant name="struts.configuration.xml.reload" value="true" />
+    <!-- 设置浏览器是否缓存静态内容 -->
+    <constant name="struts.serve.static.browserCache" value="false" />
+    <!-- 请求参数的编码方式 -->
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <!-- 每次HTTP请求系统都重新加载资源文件，有助于开发 -->
+    <constant name="struts.i18n.reload" value="true" />
+    <!-- 文件上传最大值 -->
+    <constant name="struts.multipart.maxSize" value="104857600" />
+    <!-- 让struts2支持动态方法调用 -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <!-- Action名称中是否还是用斜线 -->
+    <constant name="struts.enable.SlashesInActionNames" value="false" />
+    <!-- 允许标签中使用表达式语法 -->
+    <constant name="struts.tag.altSyntax" value="true" />
+    <!-- 对于WebLogic,Orion,OC4J此属性应该设置成true -->
+    <constant name="struts.dispatcher.parametersWorkaround" value="false" />
+    <!-- 不拦截静态资源 -->
+    <constant name="struts.action.excludePattern" value="/static/.*?" />
+
+    <package name="basePackage" extends="struts-default">
+
+
+    </package>
+    <package name="user" namespace="/user" extends="struts-default">
+        <global-results>
+            <result name="error">
+                /WEB-INF/error.jsp
+            </result>
+        </global-results>
+        <action name="index" class="userAction" method="index">
+            <result name="success">
+                /WEB-INF/user/user.jsp
+            </result>
+        </action>
+        <action name="regx">
+            <result>
+                /WEB-INF/user/reg.jsp
+            </result>
+        </action>
+        <action name="loginx">
+            <result>
+                /WEB-INF/user/login.jsp
+            </result>
+        </action>
+        <action name="reg" class="userAction" method="reg">
+            <result name="success" type="redirect">
+                index.jsp
+            </result>
+        </action>
+        <action name="login" class="userAction" method="login">
+            <result name="success" type="redirect">
+                index.jsp
+            </result>
+        </action>
+        <action name="logout" class="userAction" method="logout">
+            <result name="success" type="redirect">
+                loginx.jsp
+            </result>
+        </action>
+        <action name="check" class="userAction" method="check">
+            <result>
+
+            </result>
+        </action>
+    </package>
+    <package name="note" namespace="/note" extends="struts-default">
+        <interceptors>
+            <interceptor name="userInter" class="site.longz.note.Interceptor.UserInterceptor"/>
+            <interceptor name="noteInter" class="site.longz.note.Interceptor.NoteInterceptor"/>
+            <interceptor-stack name="userStack">
+                <interceptor-ref name="userInter"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+            <interceptor-stack name="userAndNoteStack">
+                <interceptor-ref name="userInter"/>
+                <interceptor-ref name="noteInter"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="userAndNoteStack"/>
+        <global-results>
+            <result name="error">
+                /WEB-INF/error.jsp
+            </result>
+        </global-results>
+        <action name="index" class="noteAction" method="index">
+            <result name="success">
+                /WEB-INF/note/note.jsp
+            </result>
+            <interceptor-ref name="userStack"/>
+        </action>
+        <action name="add" class="noteAction" method="add">
+            <result>
+            </result>
+            <interceptor-ref name="userStack"/>
+        </action>
+        <action name="edit">
+            <result>
+                /WEB-INF/note/edit.jsp
+            </result>
+            <interceptor-ref name="userStack"/>
+        </action>
+        <action name="view" class="noteAction" method="preview">
+            <result name="success">
+                /WEB-INF/note/view.jsp
+            </result>
+        </action>
+        <action name="modifyx" class="noteAction" method="modifyx">
+            <result name="success">
+                /WEB-INF/note/modify.jsp
+            </result>
+        </action>
+        <action name="modify" class="noteAction" method="modify">
+            <result>
+            </result>
+            <interceptor-ref name="userStack"/>
+        </action>
+        <action name="delete" class="noteAction" method="delete">
+            <result name="success" type="redirect">
+                index.jsp
+            </result>
+        </action>
+        <action name="viewbackup" class="noteAction" method="viewbackup">
+            <result name="success">
+                /WEB-INF/note/backup.jsp
+            </result>
+        </action>
+        <action name="rollback" class="noteAction" method="rollback">
+            <result name="success"  type="redirect">
+                index.jsp
+            </result>
+        </action>
+        <action name="trash" class="noteAction" method="viewtrash">
+            <result name="success">
+                /WEB-INF/note/trash.jsp
+            </result>
+            <interceptor-ref name="userStack"/>
+        </action>
+        <action name="del" class="noteAction" method="del">
+            <result name="success" type="redirect">
+                trash.jsp
+            </result>
+        </action>
+        <action name="recovery" class="noteAction" method="goback">
+            <result name="success" type="redirect">
+                index.jsp
+            </result>
+        </action>
+        <action name="draftview" class="noteAction" method="viewDraft">
+            <result name="success">
+                /WEB-INF/note/draft.jsp
+            </result>
+            <interceptor-ref name="userStack"/>
+        </action>
+        <action name="draftdelete" class="noteAction" method="deleteDraft">
+            <result name="success" type="redirect">
+                draftview.jsp
+            </result>
+        </action>
+        <action name="draftchange" class="noteAction" method="changeDraft">
+            <result name="success" type="redirect">
+                index.jsp
+            </result>
+        </action>
+        <action name="draftsave" class="noteAction" method="saveDraft">
+            <result>
+            </result>
+            <interceptor-ref name="userStack"/>
+        </action>
+    </package>
+</struts>
