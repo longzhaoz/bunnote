@@ -333,7 +333,7 @@ h6
 
 code
 {
-  display: block;
+  /*display: block;*/
 	margin: 5px;
 	padding: 5px;
 	color: #ad4c21;

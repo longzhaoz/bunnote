@@ -30,14 +30,17 @@
     <!-- 不拦截静态资源 -->
     <constant name="struts.action.excludePattern" value="/static/.*?" />
 
-    <package name="basePackage" extends="struts-default">
-
-
+    <package name="basePackage" namespace="/" extends="struts-default">
+        <action name="index">
+            <result>
+                /index.jsp
+            </result>
+        </action>
     </package>
     <package name="user" namespace="/user" extends="struts-default">
         <global-results>
             <result name="error">
-                /WEB-INF/error.jsp
+                /WEB-INF/user/error.jsp
             </result>
         </global-results>
         <action name="index" class="userAction" method="index">
@@ -93,7 +96,7 @@
         <default-interceptor-ref name="userAndNoteStack"/>
         <global-results>
             <result name="error">
-                /WEB-INF/error.jsp
+                /WEB-INF/note/error.jsp
             </result>
         </global-results>
         <action name="index" class="noteAction" method="index">
@@ -179,6 +182,19 @@
             <result>
             </result>
             <interceptor-ref name="userStack"/>
+        </action>
+        <action name="tom">
+            <result>
+                /WEB-INF/note/parseHTML.jsp
+            </result>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+    </package>
+    <package name="blog" namespace="/blog" extends="struts-default">
+        <action name="index">
+            <result>
+                /WEB-INF/blog/index.jsp
+            </result>
         </action>
     </package>
 </struts>

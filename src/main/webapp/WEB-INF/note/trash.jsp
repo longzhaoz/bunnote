@@ -20,6 +20,7 @@
     </title>
     <link rel="stylesheet" type="text/css" href=
             "../../static/css/style.css"/>
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
     <script language="javascript" type="text/javascript">
         function drop(id) {
             if (confirm("确定彻底删除当前笔记？")) {
@@ -32,6 +33,20 @@
         function rollback(id) {
             window.location.href = "/note/recovery.jsp?note.id=" + id;
         }
+        function forpage() {
+            var p = document.getElementById("page").value;
+            window.location.href="/note/trash.jsp?page="+p;
+        }
+        $(function () {
+            var page = ${page};
+            var max = ${maxPage};
+            if(page<=1){
+                $("#pageUp").css("visibility","hidden");
+            }
+            if(page>=max){
+                $("#pageDown").css("visibility","hidden");
+            }
+        });
     </script>
 </head>
 <body>
@@ -65,6 +80,16 @@
                         </tr>
                     </c:forEach>
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a href="/note/index.jsp?page=${page-1}" id="pageUp">上一页</a>
+                            <input type="text" title="页码" maxlength="3" value="${page}" style="width: 15px" id="page"/><span>/${maxPage}</span>
+                            <input type="button" value="跳转" onclick="forpage();"/>
+                            <a href="/note/index.jsp?page=${page+1}" id="pageDown">下一页</a>
+                        </td>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
             <div class="bottom"></div>

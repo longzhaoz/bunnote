@@ -51,27 +51,7 @@
     </script>
 </head>
 <body>
-<div id="head">
-    <div id="title">
-        包子笔记
-    </div>
-    <div id="menu">
-        <ul>
-            <li>
-                <a href="../index.jsp" title="欢迎页面">主页</a>
-            </li>
-            <li>
-                <a href="/note/index.jsp" title="赏阅笔记">笔记</a>
-            </li>
-            <li>
-                <a href="tags.html" title="浏览博客">博客</a>
-            </li>
-            <li class="active">
-                <a href="/user/index.jsp" title="用户相关">账号</a>
-            </li>
-        </ul>
-    </div>
-</div>
+<jsp:include page="h-menu.html"/>
 
 <div id="body_wrapper">
     <div id="body">
@@ -103,27 +83,7 @@
         <div id="right">
             <div class="top"></div>
             <div class="content">
-                <h4>菜单</h4>
-                <ul>
-                    <li><a href="../user/loginx.jsp">登录</a></li>
-                    <li><a href="../user/regx.jsp">注册</a></li>
-                    <li><a href="../user/index.jsp">用户信息</a></li>
-                    <li><a href="../user/logout.jsp">注销</a></li>
-                </ul>
-                <hr/>
-                <h4>Quote</h4>
-                There's no 'I' in team.<br/>
-                There's no 'U' in team either.<br/>
-                If I'm not on the team, and you're not on the team: nobody is on the
-                team and the team sucks!<br/>
-                <hr/>
-                <h4>Links</h4>
-                <ul>
-                    <li><a href="http://aaron.ganschow.us/" target="_blank">Aaron Ganschow</a></li>
-                    <li><a href="http://www.wildleaf.net/" target="_blank">Wildleaf</a></li>
-                    <li><a href="http://www.mozilla.org/" target="_blank">Mozilla</a></li>
-                    <li><a href="http://www.csszengarden.com/" target="_blank">CSS Zen Garden</a></li>
-                </ul>
+                <jsp:include page="r-menu.html"/>
             </div>
             <div class="bottom"></div>
         </div>

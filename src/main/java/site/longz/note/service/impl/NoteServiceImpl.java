@@ -41,4 +41,13 @@ public class NoteServiceImpl implements INoteService {
 	  public List<Note> findByUidStatus(int uid, int status) {
 			return noteDao.findByUidStatus(uid,status);
 	  }
+
+	  public int countByIdStatus(int uid,int status){
+			return noteDao.countByIdStatus(uid,status);
+	  }
+
+	  public List<Note> pageByIdStatus(int uid, int status, int page,int pageSize) {
+
+			return noteDao.pageByIdStatus(uid,status,page,pageSize);
+	  }
 }

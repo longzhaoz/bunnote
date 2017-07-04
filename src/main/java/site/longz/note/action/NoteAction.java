@@ -31,9 +31,19 @@ public class NoteAction extends BaseActionSupport {
 
 	  private int type;
 
+	  private int page;
+
 	  private List<Note> notes;
 
 	  private Note note;
+
+	  public int getPage() {
+			return page;
+	  }
+
+	  public void setPage(int page) {
+			this.page = page;
+	  }
 
 	  public List<Note> getNotes() {
 			return notes;
@@ -61,11 +71,18 @@ public class NoteAction extends BaseActionSupport {
 
 	  public String index() {
 			User user = (User) getSession("userLogined");
-			if (user == null) {
-				  setInfo("地址错误", "您还没有登录", "/user/loginx.jsp");
-				  return "error";
+			int max = noteService.countByIdStatus(user.getId(), Note.USING);
+			int pageSize =10;
+			int maxPage = (int) Math.ceil(1.0 * max / pageSize);
+			if (page<1){
+				  page=1;
 			}
-			notes = noteService.findByUidStatus(user.getId(), Note.USING);
+			if (page>maxPage){
+				  page=maxPage;
+			}
+			setAttribute("maxPage",maxPage);
+			setAttribute("page",page);
+			notes = noteService.pageByIdStatus(user.getId(),Note.USING,page,pageSize);
 			return "success";
 	  }
 
@@ -102,9 +119,11 @@ public class NoteAction extends BaseActionSupport {
 			User user = (User) getSession("userLogined");
 			note = noteService.findById(note.getId());
 			if (note == null) {
+				  setInfo("页面错误", "没找到对应的笔记", "/note/index.jsp");
 				  return "error";
 			}
 			if (note.getUid() != user.getId()) {
+				  setInfo("权限错误", "您无权对此笔记就行修改", "/note/index.jsp");
 				  return "error";
 			}
 			return "success";
@@ -133,6 +152,7 @@ public class NoteAction extends BaseActionSupport {
 			User user = (User) getSession("userLogined");
 			note = noteService.findById(note.getId());
 			if (note.getUid() != user.getId()) {
+				  setInfo("权限错误", "您无权对此笔记就行修改", "/note/index.jsp");
 				  return "error";
 			}
 			note.setStatus(Note.TRASH);
@@ -142,13 +162,25 @@ public class NoteAction extends BaseActionSupport {
 
 	  public String viewtrash() {
 			User user = (User) getSession("userLogined");
-			notes = noteService.findByUidStatus(user.getId(), Note.TRASH);
+			int max = noteService.countByIdStatus(user.getId(), Note.TRASH);
+			int pageSize =10;
+			int maxPage = (int) Math.ceil(1.0 * max / pageSize);
+			if (page<1){
+				  page=1;
+			}
+			if (page>maxPage){
+				  page=maxPage;
+			}
+			setAttribute("maxPage",maxPage);
+			setAttribute("page",page);
+			notes = noteService.pageByIdStatus(user.getId(),Note.TRASH,page,pageSize);
 			return "success";
 	  }
 
 	  public String del() {
 			User user = (User) getSession("userLogined");
 			if (noteService.findById(note.getId()).getUid() != user.getId()) {
+				  setInfo("权限错误", "您无权对此笔记就行修改", "/note/index.jsp");
 				  return "error";
 			}
 			Backup b = backupService.findByNid(note.getId());
@@ -163,6 +195,7 @@ public class NoteAction extends BaseActionSupport {
 			note = noteService.findById(note.getId());
 			User user = (User) getSession("userLogined");
 			if (note.getUid() != user.getId()) {
+				  setInfo("权限错误", "您无权对此笔记就行修改", "/note/index.jsp");
 				  return "error";
 			}
 			note.setStatus(Note.USING);
@@ -172,6 +205,7 @@ public class NoteAction extends BaseActionSupport {
 
 	  public String rollback() {
 			if (type == 0) {
+				  setInfo("权限错误", "您输入的网址有误", "/note/index.jsp");
 				  return "error";
 			}
 			note = noteService.findById(note.getId());
@@ -182,8 +216,8 @@ public class NoteAction extends BaseActionSupport {
 
 	  public String viewbackup() {
 			Backup b = backupService.findByNid(note.getId());
-			if (b==null){
-				  setInfo("备份错误","没有找到备份","/note/index.jsp");
+			if (b == null) {
+				  setInfo("备份错误", "没有找到备份", "/note/index.jsp");
 				  return "error";
 			}
 			notes = b.toNotes();
@@ -229,7 +263,7 @@ public class NoteAction extends BaseActionSupport {
 			return "success";
 	  }
 
-	  public String deleteDraft(){
+	  public String deleteDraft() {
 			draftService.delete(note.getId());
 			return "success";
 	  }

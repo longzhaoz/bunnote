@@ -56,4 +56,22 @@ public class NoteDaoImpl implements INoteDao{
 			query.setParameter("status",status);
 			return query.list();
 	  }
+	  public int countByIdStatus(int uid,int status){
+	  	  Session session = sessionFactory.getCurrentSession();
+	  	  String sql ="select count(*) from Note where uid=:uid and status=:status";
+	  	  Query query = session.createQuery(sql);
+	  	  query.setParameter("uid",uid);
+	  	  query.setParameter("status",status);
+	  	  return   ((Number) query.uniqueResult()).intValue();
+	  }
+	  public List<Note> pageByIdStatus(int uid,int status,int page,int pagesize){
+	  	  Session session = sessionFactory.getCurrentSession();
+	  	  String sql = "from Note where uid=:uid and status=:status";
+	  	  Query query = session.createQuery(sql);
+	  	  query.setParameter("uid",uid);
+	  	  query.setParameter("status",status);
+	  	  query.setFirstResult((page-1)*pagesize);
+	  	  query.setMaxResults(pagesize);
+	  	  return  query.list();
+	  }
 }

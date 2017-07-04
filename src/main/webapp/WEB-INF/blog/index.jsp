@@ -17,8 +17,8 @@
     <title>
         用户操作
     </title>
-    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" />
-
+    <link rel="stylesheet" type="text/css" href=
+            "../static/css/style.css" />
 </head>
 <body>
 <jsp:include page="h-menu.html"/>
@@ -26,22 +26,9 @@
 <div id="body_wrapper">
     <div id="body">
         <div id="left">
-            <div class="top"></div>
-            <div class="content">
-                <h1>用户信息</h1>
-                <h2>欢迎你,${userLogined.alias}</h2>
-                <h3>注册时间：<fmt:formatDate value="${userLogined.regTime}" pattern="yyyy年MM月dd日"/></h3>
-                <h3>上次登录时间：<fmt:formatDate value="${userLogined.time}" pattern="yyyy年MM月dd日 HH时mm分ss秒"/></h3>
-            </div>
-            <div class="bottom"></div>
+            <h1>敬请期待</h1>
         </div>
-        <div id="right">
-            <div class="top"></div>
-            <div class="content">
-                <jsp:include page="r-menu.html"/>
-            </div>
-            <div class="bottom"></div>
-        </div>
+
         <div class="clearer"></div>
     </div>
     <div class="clearer"></div>

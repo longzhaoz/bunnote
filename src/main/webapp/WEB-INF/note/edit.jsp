@@ -112,7 +112,7 @@
                 <jsp:include page="r-menu.html"/>
                 <hr />
                 <h4>功能区</h4>
-                <input type="button" value="新增笔记" id="savenote" onclick="savenote();"/>
+                <input type="button" value="存入笔记" id="savenote" onclick="savenote();"/>
                 <input type="button" value="存入草稿" id="savedraft" onclick="savedraft();"/>
                 <input type="button" value="清空笔记" id="clear"/>
                 <input type="button" value="跳转末尾" id="turn"/>

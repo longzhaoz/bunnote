@@ -15,4 +15,6 @@ public interface INoteService {
 	  List<Note> findAll();
 	  Note findById(int id);
 	  List<Note> findByUidStatus(int uid,int status);
+	  int countByIdStatus(int uid,int status);
+	  List<Note> pageByIdStatus(int uid,int status,int page,int pageSize);
 }

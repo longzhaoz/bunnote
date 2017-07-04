@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page isELIgnored="false"%>
+<%@ page isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -20,6 +20,7 @@
     </title>
     <link rel="stylesheet" type="text/css" href=
             "../../static/css/style.css" />
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
     <script language="javascript" type="text/javascript">
         function  modify(id) {
             window.location.href="/note/modifyx.jsp?note.id="+id;
@@ -41,6 +42,20 @@
         function trash() {
             window.location.href="/note/trash.jsp";
         }
+        function forpage() {
+            var p = document.getElementById("page").value;
+            window.location.href="/note/index.jsp?page="+p;
+        }
+        $(function () {
+            var page = ${page};
+            var max = ${maxPage};
+            if(page<=1){
+                $("#pageUp").css("visibility","hidden");
+            }
+            if(page>=max){
+                $("#pageDown").css("visibility","hidden");
+            }
+        });
     </script>
 </head>
 <body>
@@ -75,6 +90,16 @@
                         </tr>
                     </c:forEach>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <a href="/note/index.jsp?page=${page-1}" id="pageUp">上一页</a>
+                                <input type="text" title="页码" maxlength="3" value="${page}" style="width: 15px" id="page"/><span>/${maxPage}</span>
+                                <input type="button" value="跳转" onclick="forpage();"/>
+                                <a href="/note/index.jsp?page=${page+1}" id="pageDown">下一页</a>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <div class="bottom"></div>
