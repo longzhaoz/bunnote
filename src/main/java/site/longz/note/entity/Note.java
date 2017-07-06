@@ -1,6 +1,7 @@
 package site.longz.note.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -8,7 +9,9 @@ import java.util.*;
  */
 @Entity
 @Table(name = "note",schema = "bunnote")
-public class Note {
+public class Note implements Serializable{
+
+	  private static final long serialVersionUID = 1L;
 	  @Id
 	  @Column(nullable = false)
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,5 +102,10 @@ public class Note {
 			result = 31 * result + getTime().hashCode();
 			result = 31 * result + getStatus();
 			return result;
+	  }
+
+	  @Override
+	  public String toString() {
+			return id+"";
 	  }
 }

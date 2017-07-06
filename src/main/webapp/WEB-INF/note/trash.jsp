@@ -83,10 +83,10 @@
                     <tfoot>
                     <tr>
                         <td colspan="4">
-                            <a href="/note/index.jsp?page=${page-1}" id="pageUp">上一页</a>
+                            <a href="/note/trash.jsp?page=${page-1}" id="pageUp">上一页</a>
                             <input type="text" title="页码" maxlength="3" value="${page}" style="width: 15px" id="page"/><span>/${maxPage}</span>
                             <input type="button" value="跳转" onclick="forpage();"/>
-                            <a href="/note/index.jsp?page=${page+1}" id="pageDown">下一页</a>
+                            <a href="/note/trash.jsp?page=${page+1}" id="pageDown">下一页</a>
                         </td>
                     </tr>
                     </tfoot>

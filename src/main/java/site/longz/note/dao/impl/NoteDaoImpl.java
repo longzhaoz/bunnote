@@ -33,10 +33,11 @@ public class NoteDaoImpl implements INoteDao{
 			session.delete(n);
 	  }
 
-	  public List<Note> findAll() {
+	  public List<Note> findAll(int uid) {
 			Session session = sessionFactory.getCurrentSession();
-			String sql = "from Note";
+			String sql = "from Note where uid=:uid";
 			Query query = session.createQuery(sql);
+			query.setParameter("uid",uid);
 			return query.list();
 	  }
 

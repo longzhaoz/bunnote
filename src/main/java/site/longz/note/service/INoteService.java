@@ -11,9 +11,9 @@ import java.util.*;
 public interface INoteService {
 	  Serializable save(Note n);
 	  void update(Note n);
-	  void delete(int id);
-	  List<Note> findAll();
-	  Note findById(int id);
+	  void delete(int id,int uid);
+	  List<Note> findAll(int uid);
+	  Note findById(int id,int uid);
 	  List<Note> findByUidStatus(int uid,int status);
 	  int countByIdStatus(int uid,int status);
 	  List<Note> pageByIdStatus(int uid,int status,int page,int pageSize);
